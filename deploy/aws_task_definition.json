@@ -1,0 +1,18 @@
+{
+  "family": "facility-feed-service",
+  "containerDefinitions": [
+    {
+      "name": "facility-feed-service",
+      "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/facility-feed-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "environment": [
+        {"name": "DATABASE_URL", "value": "${DATABASE_URL}"},
+        {"name": "AWS_ACCESS_KEY_ID", "value": "${AWS_ACCESS_KEY_ID}"},
+        {"name": "AWS_SECRET_ACCESS_KEY", "value": "${AWS_SECRET_ACCESS_KEY}"},
+        {"name": "AWS_S3_BUCKET", "value": "${AWS_S3_BUCKET}"}
+      ]
+    }
+  ]
+}
