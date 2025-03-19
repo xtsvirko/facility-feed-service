@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "facility-feed-service"
+version = "0.1.0"
+description = "Service to generate and upload facility data feeds"
+authors = ["Oleksandr Tsvirko <oleksandr.tsvirko@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+asyncpg = "*"
+aioboto3 = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = "*"
+gzip = "*"
+python-dotenv = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+flake8 = "*"
+mypy = "*"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
