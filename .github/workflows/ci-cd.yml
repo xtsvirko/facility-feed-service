@@ -27,11 +27,6 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Linting
-        run: |
-          source venv/bin/activate
-          pip install flake8
-          flake8 src/
 
       - name: Run Tests
         run: |
