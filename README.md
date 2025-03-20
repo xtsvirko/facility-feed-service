@@ -42,14 +42,10 @@ facility_feed_service/
 │── .github/ # CI/CD pipeline 
 │   ├── workflows/ 
 │   │   ├── ci-cd.yml # GitHub Actions for deployment 
-│── docker/ # Docker setup 
-│   ├── Dockerfile # Docker container definition 
-│   ├── docker-compose.yml # Local environment (PostgreSQL, service) 
-│   ├── .dockerignore # Ignore unnecessary files 
-│── docs/ # Documentation 
-│   ├── README.md # Project documentation 
-│   ├── architecture.md # Detailed architecture 
+│── Dockerfile # Docker container definition
+├── .dockerignore # Ignore unnecessary files 
+├── README.md # Project documentation 
 │── .env.sample # Sample environment variables 
 │── pyproject.toml # Python project configuration (Poetry) 
 │── requirements.txt # Dependencies 
-│
+
