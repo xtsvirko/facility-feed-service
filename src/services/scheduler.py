@@ -1,11 +1,12 @@
 import asyncio
-from services.feed_generate import FeedGenerator
-from services.metadata_generate import MetadataGenerator
-from services.s3_uploader import S3Uploader
 import gzip
 import json
 import os
 from datetime import datetime
+
+from services.feed_generate import FeedGenerator
+from services.metadata_generate import MetadataGenerator
+from services.s3_uploader import S3Uploader
 
 
 def get_feed_filename():
@@ -32,7 +33,6 @@ async def scheduled_task():
         json.dump(metadata, f)
 
     await S3Uploader.upload_to_s3(metadata_file, "metadata.json")
-
 
 
 if __name__ == "__main__":
