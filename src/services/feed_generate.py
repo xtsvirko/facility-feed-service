@@ -1,5 +1,6 @@
 from database.repository import FacilityRepository
 from utils.config import config
+from utils.logger import logger
 
 
 class FeedGenerator:
@@ -7,10 +8,13 @@ class FeedGenerator:
     async def generate_feed():
         offset = 0
         feeds = []
-
+        logger.info("Start feed generation process")
         while True:
-            facilities = await FacilityRepository.get_facilities(config.CHUNK_SIZE, offset)
+            facilities = await FacilityRepository.get_facilities(
+                config.CHUNK_SIZE, offset
+            )
             if not facilities:
+                logger.info("Generation finished")
                 break
 
             feed_data = {
@@ -28,9 +32,9 @@ class FeedGenerator:
                                 "locality": record["locality"],
                                 "region": record["region"],
                                 "postal_code": record["postal_code"],
-                                "street_address": record["street_address"]
-                            }
-                        }
+                                "street_address": record["street_address"],
+                            },
+                        },
                     }
                     for record in facilities
                 ]
