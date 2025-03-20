@@ -10,7 +10,7 @@ class FeedGenerator:
         feeds = []
         logger.info("Start feed generation process")
         while True:
-            facilities = await FacilityRepository.get_facilities(
+            facilities = await FacilityRepository.fetch_facilities(
                 config.CHUNK_SIZE, offset
             )
             if not facilities:

@@ -4,5 +4,5 @@ from database.queries import FETCH_FACILITY_DATA
 
 class FacilityRepository:
     @staticmethod
-    async def get_facilities(limit: int, offset: int):
+    async def fetch_facilities(limit: int, offset: int):
         return await Database.fetch(FETCH_FACILITY_DATA, limit, offset)
