@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env/
+.envrc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+
+# Test output
+coverage/
+*.cover
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+
+# Byte-compiled files
+*.egg
+*.egg-info/
+dist/
+build/
