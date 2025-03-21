@@ -5,14 +5,18 @@ from utils.logger import logger
 
 class FeedGenerator:
     @staticmethod
-    async def generate_feed():
+    async def generate_feed() -> list[dict]:
         offset = 0
         feeds = []
         logger.info("Start feed generation process")
         while True:
-            facilities = await FacilityRepository.get_facilities(
-                config.CHUNK_SIZE, offset
-            )
+            try:
+                facilities = await FacilityRepository.fetch_facilities(
+                    config.CHUNK_SIZE, offset
+                )
+            except Exception as e:
+                logger.error(f"Error while getting data from DB (offset={offset}): {e}")
+                break
             if not facilities:
                 logger.info("Generation finished")
                 break
