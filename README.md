@@ -10,13 +10,24 @@ Facility Feed Service is an **asynchronous Python service** that:
 
 ---
 
+## 📦 Technologies
+
+- Python 3.11
+- Asyncio, asyncpg
+- Docker
+- AWS ECS Fargate
+- AWS S3
+- AWS EventBridge (CloudWatch Events)
+- GitHub Actions
+
 ## **Project Architecture**
 
-# Facility Feed Service Project Structure
 
 ```
 facility_feed_service/ 
 │── src/ # Source code 
+│── deploy/ # Scripts for deployment 
+├── setup_cloudwatch_event.sh #Bash script for CloudWatch event configuration
 │   ├── database/ # Database interactions 
 │   │   ├── __init__.py 
 │   │   ├── connection.py # PostgreSQL connection (asyncpg) 
@@ -46,6 +57,23 @@ facility_feed_service/
 ├── .dockerignore # Ignore unnecessary files 
 ├── README.md # Project documentation 
 │── .env.sample # Sample environment variables 
-│── pyproject.toml # Python project configuration (Poetry) 
 │── requirements.txt # Dependencies 
+```
 
+## ☁️ Deployment via GitHub Actions
+#### Add the following secrets:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION
+- ECR_REPOSITORY
+#### After pushing in main docker image will be automatically push the image to AWS ECR
+
+## ⏱️ Automated Execution via CloudWatch
+#### The project is configured to automatically trigger the ECS #task in the #cluster every hour using AWS EventBridge.
+
+#### You can configure it using the deployment script:
+```bash
+  deploy/setup_cloudwatch_event.sh
+```
+### Important:
+#### This script was tested for the region eu-north-1. For other regions it could be different!
