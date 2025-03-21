@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: eu-central-1
-  ECR_REPOSITORY: my-repository  # заменишь на своё имя репозитория
+  ECR_REPOSITORY: my_repository
 
 jobs:
   lint-test-build-deploy:
