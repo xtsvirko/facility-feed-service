@@ -1,11 +1,13 @@
 import asyncio
-
 import asyncpg
+
 from utils.config import config
 from utils.logger import logger
 
 
 class Database:
+    """Asynchronous database handler using a connection pool with asyncpg."""
+
     _pool = None
 
     @classmethod
@@ -20,7 +22,7 @@ class Database:
             except Exception as e:
                 logger.error(f"Connection attempt {attempt + 1} failed: {e}")
                 await asyncio.sleep(delay)
-        raise ConnectionError(f"Are not able to connect after {retries} retries")
+        raise ConnectionError(f"Unable to connect after {retries} retries")
 
     @classmethod
     async def disconnect(cls) -> None:
@@ -31,6 +33,7 @@ class Database:
 
     @classmethod
     async def fetch(cls, query: str, *args):
+
         try:
             async with cls._pool.acquire() as conn:
                 logger.info(f"Fetch: {query} | Params: {args}")

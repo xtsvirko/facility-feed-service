@@ -4,6 +4,8 @@ from utils.logger import logger
 
 
 class FeedGenerator:
+    """Service class for generating structured feed data from facility records."""
+
     @staticmethod
     async def generate_feed() -> list[dict]:
         offset = 0
