@@ -6,6 +6,8 @@ from utils.logger import logger
 
 
 class S3Uploader:
+    """Service class responsible for uploading files to AWS S3."""
+
     @staticmethod
     async def upload_to_s3(file_path: str, s3_key: str):
         try:

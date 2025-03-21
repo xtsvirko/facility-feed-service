@@ -24,42 +24,66 @@ Facility Feed Service is an **asynchronous Python service** that:
 
 
 ```
-facility_feed_service/ 
-│── src/ # Source code 
-│── deploy/ # Scripts for deployment 
-├── setup_cloudwatch_event.sh #Bash script for CloudWatch event configuration
-│   ├── database/ # Database interactions 
-│   │   ├── __init__.py 
-│   │   ├── connection.py # PostgreSQL connection (asyncpg) 
-│   │   ├── queries.py # SQL queries 
-│   │   ├── repository.py # Fetching data (100-record chunks) 
-│   ├── services/ # Core business logic 
-│   │   ├── __init__.py 
-│   │   ├── feed_generator.py # Generates JSON feed files 
-│   │   ├── metadata_generator.py # Creates metadata file 
-│   │   ├── s3_uploader.py # Uploads to AWS S3 (aioboto3) 
-│   │   ├── scheduler.py # Scheduled execution (AWS Fargate) 
-│   ├── utils/ # Utility modules 
-│   │   ├── __init__.py 
-│   │   ├── config.py # Configuration (dotenv) 
-│   │   ├── logger.py # Logging 
-│   │   ├── error_handler.py # Error handling 
-│── tests/ # Unit and integration tests 
-│   ├── test_database.py # Mock database test 
-│   ├── test_feed_generator.py # JSON feed generator test 
-│   ├── test_metadata_generator.py # Metadata generator test 
-│   ├── test_s3_uploader.py # Mock AWS S3 upload test 
-│   ├── test_scheduler.py # Mock scheduler test 
-│── .github/ # CI/CD pipeline 
-│   ├── workflows/ 
-│   │   ├── ci-cd.yml # GitHub Actions for deployment 
-│── Dockerfile # Docker container definition
-├── .dockerignore # Ignore unnecessary files 
-├── README.md # Project documentation 
-│── .env.sample # Sample environment variables 
-│── requirements.txt # Dependencies 
+facility_feed_service/
+│
+├── src/                        # 📦 Main source code
+│   ├── database/               # 📊 Database access layer (PostgreSQL)
+│   │   ├── __init__.py
+│   │   ├── connection.py       # Handles async DB connection via asyncpg
+│   │   ├── queries.py          # Raw SQL queries
+│   │   ├── repository.py       # Data fetching with pagination
+│   │
+│   ├── services/               # ⚙️ Core business logic
+│   │   ├── __init__.py
+│   │   ├── feed_generator.py   # Generates JSON feed data
+│   │   ├── metadata_generator.py # Creates metadata JSON file
+│   │   ├── s3_uploader.py      # Uploads files to AWS S3 via aioboto3
+│   │   ├── main.py             # Entry point script (runs on schedule in AWS Fargate)
+│   │
+│   ├── utils/                  # 🔧 Utility and helper modules
+│       ├── __init__.py
+│       ├── config.py           # Loads environment variables via dotenv
+│       ├── logger.py           # Logging configuration
+│       ├── error_handler.py    # Optional error handling helpers
+│
+├── deploy/                    # 🚀 Deployment-related scripts and files
+│   ├── setup_cloudwatch_event.sh # Bash script to configure AWS CloudWatch EventBridge
+│
+├── tests/                     # ✅ Unit and integration tests
+│   ├── test_database.py
+│   ├── test_feed_generator.py
+│   ├── test_metadata_generator.py
+│   ├── test_s3_uploader.py
+│   ├── test_scheduler.py
+│
+├── .github/                   # ⚙️ GitHub Actions CI/CD workflows
+│   └── workflows/
+│       └── ci-cd.yml          # CI/CD pipeline configuration
+│
+├── Dockerfile                 # 🐳 Docker container definition
+├── .dockerignore              # Files/folders to exclude from Docker builds
+├── .env.sample                # Sample environment variable configuration
+├── requirements.txt           # Python dependencies
+└── README.md                  # Project documentation
+ 
 ```
-
+## 🚀 How to Run
+1. Install Dependencies
+```bash
+  pip install -r requirements.txt
+```
+2. Set Environment Variables(use .env.sample)
+#### Important: 
+Make sure you have created database with valid credentials
+3. Run the Scheduled Task Manually
+    ```bash
+    python src/services/main.py
+    ```
+#### 🐳 Optional: Run in Docker
+```bash
+    docker build -t facility-feed .
+    docker run --env-file src/.env facility-feed  
+```
 ## ☁️ Deployment via GitHub Actions
 #### Add the following secrets:
 - AWS_ACCESS_KEY_ID
