@@ -16,14 +16,16 @@ class S3Uploader:
                 aws_secret_access_key=config.AWS_SECRET_ACCESS_KEY,
                 region_name=config.AWS_REGION,
             ) as s3_client:
-                async with aiofiles.open(file_path, "rb") as file:
+                async with aiofiles.open(file_path, "rb") as file_obj:
                     await s3_client.upload_fileobj(
-                        Bucket=config.AWS_S3_BUCKET,
-                        Key=s3_key,
-                        Body=await file.read(),
-                        ContentType="application/json",
-                        ContentEncoding="gzip",
+                        file_obj,
+                        config.AWS_S3_BUCKET,
+                        s3_key,
+                        ExtraArgs={
+                            "ContentType": "application/json",
+                            "ContentEncoding": "gzip",
+                        },
                     )
-                logger.info(f"File {file_path} uploaded (key: {s3_key})")
+                logger.info(f"File {file_path} uploaded to S3 (key: {s3_key})")
         except Exception as e:
             logger.error(f"Error in uploading file {file_path} to S3: {e}")
