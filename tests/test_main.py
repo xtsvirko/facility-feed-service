@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from services.scheduler import get_feed_filename
+from services.main import get_feed_filename
 
 
 @pytest.mark.asyncio
